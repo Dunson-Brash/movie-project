@@ -1,6 +1,5 @@
 (function () {
 
-
     "use strict";
     let url = 'https://puffy-easy-circle.glitch.me/movies'
 
