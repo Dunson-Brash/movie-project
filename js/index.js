@@ -14,7 +14,19 @@ fetch('https://puffy-easy-circle.glitch.me/movies')
             const idNum = data.id
 
             markUp += `
-            
+<div class="card text-center d-block w-100 mb-3">
+              <div class="card-header">
+                ${movieDirector} 
+              </div>
+              <div class="card-body">
+                <h2 class="card-title">${movieTitle}</h2>
+                <h5 class="card-genre text-capitalize">${genre} </h5>
+              </div>
+              <div class="card-footer text-muted">
+                <h5>${ratings} Stars</h5>
+              </div> 
+              </div>      
             `
-        })
     })
+$('.container').html(markUp)})
+
