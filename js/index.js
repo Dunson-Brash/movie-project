@@ -1,3 +1,5 @@
+(function () {
+
 "use strict";
 
 
@@ -18,3 +20,4 @@ fetch('https://puffy-easy-circle.glitch.me/movies')
             `
         })
     })
+})()
