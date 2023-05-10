@@ -26,9 +26,11 @@
       <td>${movieDirector}</td>
       <td>${ratings}</td>
       <td>${genre}</td>
+      <td><button id="edit" class="edit">Edit</button></td>
     </tr>
+    
   `
-                    markUp2 += `<option>${movieTitle}</option>`
+                    markUp2 += `<option value="${idNum}" >${movieTitle}</option>`
 
                 })
                 $('.movie-container').html(markUp)
@@ -61,15 +63,20 @@
     })
 
     $('#delete').click(() => {
-        let deleteMovie = $('#delete-input').val()
+        let deleteItem = $('#delete-input').val()
         const options = {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({data: deleteMovie})
+
     }
-    fetch(url, options).then(res => console.log(res))
+    fetch(`https://puffy-easy-circle.glitch.me/movies/${deleteItem}`, options).then(res => console.log(res))
+        renderMovies()
+    })
+
+    $('.movie-container').on('click','#edit',() =>{
+
     })
 })()
 
