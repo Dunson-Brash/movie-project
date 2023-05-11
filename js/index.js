@@ -1,5 +1,6 @@
 (function () {
-
+const OPEN_MOVIE_KEY = '95b50fa1'
+    const movieUrl = `http://img.omdbapi.com/?apikey=${OPEN_MOVIE_KEY}&`
 
     "use strict";
 
@@ -23,20 +24,21 @@
                     const idNum = data.id
 
                     markUp += `
-    <div class="card editMovie col-3 m-5">
+    <div class="card editMovie col-sm-6 col-md-3 m-5">
+    <img src="../img/poster.png" style="w-100">
       <h1 class="text-center mb-3 mt-3 movie-title text-capitalize">${movieTitle}</h1>
       <h5 class="text-center mb-3 mt-3 movie-director text-capitalize">${movieDirector}</h5>
       <h4 class="text-center mb-3 mt-3 movie-rating">${ratings} Stars</h4>
       <h3 class="text-center text-capitalize mb-3 mt-3 movie-genre">${genre}</h3>
-      <div class ="text-center mb-3 mt-3"><button value="${idNum}" class="edit btn btn-primary">Edit</button></div>
+      <div class ="text-center mb-3 mt-3"><button value="${idNum}" class="edit btn btn-primary btn-lg">Edit</button></div>
     </div>
     
     <div class="card d-none col-3 m-5" id="edit-form">
-    <form >
-      <div class="text-center mb-3 mt-3 text-capitalize">Title: <input type="text" id="edit-title-input${idNum}" placeholder="${movieTitle}"></div>
-        <div class="text-center mb-3 mt-3 text-capitalize">Director: <input type="text" id="edit-director-input${idNum}" placeholder="${movieDirector}"></div>
-        <div class="text-center mb-3 mt-3">
-            <select id="edit-stars-input" required>
+    <form class="d-flex flex-column align-items-center">
+      <div class=" text-center col-8 mb-3 mt-3 text-capitalize"><input class=" form-control type="text" id="edit-title-input${idNum}" placeholder="${movieTitle}"></div>
+        <div class=" text-center col-8 mb-3 mt-3 text-capitalize"><input class=" form-control type="text" id="edit-director-input${idNum}" placeholder="${movieDirector}"></div>
+        <div class="text-center col-8 mb-3 mt-3">
+            <select class=" form-control col-8" id="edit-stars-input" required>
                 <option disabled selected>Rating</option>
                 <option>0</option>
                 <option>1</option>
@@ -46,8 +48,8 @@
                 <option>5</option>
             </select>
             </div>
-            <div class="text-center mb-3 mt-3">Genre: <input class="text-capitalize" type="text" id="edit-genre-input" placeholder="${genre}"></div>
-        <div class="text-center mb-3 mt-3"><button value="${idNum}" class="btn btn-primary edit-input" id="edit-input" type="button">+</button></div> 
+            <div class=" col-8 text-center mb-3 mt-3"> <input class="text-capitalize form-control" type="text" id="edit-genre-input" placeholder="${genre}"></div>
+        <div class="text-center mb-3 mt-3"><button value="${idNum}" class="btn btn-primary btn-lg edit-input" id="edit-input" type="button">+</button></div> 
         </form>
 </div>
     
