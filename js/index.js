@@ -1,4 +1,5 @@
 (function () {
+
 const OPEN_MOVIE_KEY = '95b50fa1'
     const movieUrl = `http://img.omdbapi.com/?apikey=${OPEN_MOVIE_KEY}&`
 
