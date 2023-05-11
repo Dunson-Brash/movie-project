@@ -2,6 +2,8 @@
 
 
     "use strict";
+
+
     let url = 'https://puffy-easy-circle.glitch.me/movies'
 
 // created markup for starting web page
@@ -21,19 +23,19 @@
                     const idNum = data.id
 
                     markUp += `
-    <tr class="editMovie">
-      <td>${movieTitle}</td>
-      <td>${movieDirector}</td>
-      <td>${ratings}</td>
-      <td class="text-capitalize">${genre}</td>
-      <td><button value="${idNum}" class="edit">Edit</button></td>
-    </tr>
-    <tr class="d-none">
+    <div class="card editMovie col-5 m-5">
+      <h1 class="text-center mb-3 mt-3 movie-title text-capitalize">${movieTitle}</h1>
+      <h5 class="text-center mb-3 mt-3 movie-director text-capitalize">${movieDirector}</h5>
+      <h4 class="text-center mb-3 mt-3 movie-rating">${ratings}</h4>
+      <h3 class="text-center text-capitalize mb-3 mt-3 movie-genre">${genre}</h3>
+      <div class ="text-center mb-3 mt-3"><button value="${idNum}" class="edit btn btn-primary">Edit</button></div>
+    </div>
     
-    <form id="edit-form">
-      <td><input type="text" id="edit-title-input${idNum}" placeholder="${movieTitle}"></td>
-        <td><input type="text" id="edit-director-input" placeholder="${movieDirector}"></td>
-        <td>
+    <div class="card d-none col-5 m-5" id="edit-form">
+    <form >
+      <div class="text-center mb-3 mt-3">Title: <input type="text" id="edit-title-input${idNum}" placeholder="${movieTitle}"></div>
+        <div class="text-center mb-3 mt-3">Director: <input type="text" id="edit-director-input${idNum}" placeholder="${movieDirector}"></div>
+        <div class="text-center mb-3 mt-3">
             <select id="edit-stars-input" required>
                 <option disabled selected>Rating</option>
                 <option>0</option>
@@ -43,11 +45,11 @@
                 <option>4</option>
                 <option>5</option>
             </select>
-            </td>
-            <td> <input class="text-capitalize" type="text" id="edit-genre-input" placeholder="${genre}"></td>
-        <td><button value="${idNum}" class="edit-input" id="edit-input" type="button">+</button></td> 
+            </div>
+            <div class="text-center mb-3 mt-3">Genre: <input class="text-capitalize" type="text" id="edit-genre-input" placeholder="${genre}"></div>
+        <div class="text-center mb-3 mt-3"><button value="${idNum}" class="btn btn-primary edit-input" id="edit-input" type="button">+</button></div> 
         </form>
-</tr>
+</div>
     
   `
                     markUp2 += `<option value="${idNum}" >${movieTitle}</option>`
@@ -62,49 +64,74 @@
             })
             .then(() => {
                 $('.movie-container').on('click', '.edit', function () {
+                    // on click of edit, display edit form
                     let hiddenEdit = $(this).parent().parent().next()
                     $(this).addClass('d-none')
                     $(hiddenEdit).removeClass('d-none')
 
-                    let movieEditId = $(this).attr('value');
-                    return movieEditId
 
                 })
-            }).then(()=>{
-                $('.movie-container').on('click', `.edit-input`, function () {
-                    let editMovie = {
-                        title: $(this).parent().parent().children().children().first().val(),
-                        director: $(this).parent().parent().children().next().next().children().val(),
-                        rating: $(this).parent().parent().children().next().next().next().children().val(),
-                        genre: $(this).parent().parent().children().next().next().next().next().children().val(),
-                        id: $(this).attr('value'),
-                    }
-                    // console.log($(this).parent().parent().parent().children().children().first().next().text())
-                    if(editMovie.title === ''){
-                        editMovie.title = $(this).parent().parent().prev().children().first().text()
-                    }
-                    console.log(editMovie.title)
-                    if(editMovie.director === ''){
-                        editMovie.director = $(this).parent().parent().prev().children().first().next().text()
-                    }
-                    console.log(editMovie.director)
-                    if(editMovie.rating === null){
-                        editMovie.rating = $(this).parent().parent().prev().children().first().next().next().text();
-                    }
-                    console.log(editMovie.rating)
-                    if(editMovie.genre === ''){
-                        editMovie.genre = $(this).parent().parent().prev().children().first().next().next().next().text()
-                    }
-                    console.log(editMovie.genre)
+            }).then(() => {
 
-                    const options = {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(editMovie),
-                    };
-                    fetch(`https://puffy-easy-circle.glitch.me/movies/${editMovie.id}`, options).then(res => console.log(res)).then(() => renderMovies())
+            $('.movie-container').on('click', `.edit-input`, function () {
+
+                // let updatedMovie = {}
+                // -----------------  this fetch request helps get movies original values and in the for Each loop ... change the values of updatedMovies based on these conditions: if the movie title that the user input is empty , switch it for movie.title,etc.
+                fetch(url).then(res => res.json()).then(movies => {
+                    console.log($(this).attr('value'))
+                    movies.forEach(movie => {
+                        let idNum = $(this).attr('value')
+                        if (movie.id == idNum) {
+                            let prevMovie = {
+                                title: movie.title,
+                                director: movie.director,
+                                ratings: movie.rating,
+                                genre: movie.genre,
+                                id: movie.id
+                            }
+                            let editMovie = {
+                                title: $(this).parent().parent().children().children().first().val(),
+                                director: $(this).parent().parent().children().next().children().val(),
+                                rating: $(this).parent().parent().children().next().next().children().val(),
+                                genre: $(this).parent().parent().children().next().next().next().children().val(),
+                                id: $(this).attr('value'),
+                            }
+                            if (editMovie.title === '') {
+                                editMovie.title = prevMovie.title
+                            }
+                            if (editMovie.director === '') {
+                                editMovie.director = prevMovie.director
+                            }
+                            if (editMovie.rating === null) {
+                                editMovie.rating = prevMovie.ratings;
+                            }
+                            if (editMovie.genre === '') {
+                                editMovie.genre = prevMovie.genre
+                            }
+
+                            console.log(editMovie)
+                            console.log(prevMovie)
+
+                            const options = {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(editMovie),
+                            };
+                            fetch(`https://puffy-easy-circle.glitch.me/movies/${editMovie.id}`, options)
+                                .then(() =>
+                                    $(document).ready(() => {
+                                        $('.pageloader').show();
+                                        setTimeout(() => {
+                                            $('.pageloader').hide();
+                                        }, 1000)
+                                    }))
+                                .then(() => renderMovies())
+                        }
+                    })
+                })
+
             })
         })
     }
@@ -120,7 +147,6 @@
             rating: $('#stars-input').val(),
             genre: $('#genre-input').val(),
         }
-        console.log(newMovie)
         const options = {
             method: 'POST',
             headers: {
@@ -128,7 +154,17 @@
             },
             body: JSON.stringify(newMovie),
         };
-        fetch(url, options).then(res => console.log(res)).then(() => renderMovies())
+        fetch(url, options)
+            .then(() =>
+                $(document).ready(() => {
+                    $('.pageloader').show();
+                    setTimeout(() => {
+                        $('.pageloader').hide();
+                    }, 1000)
+                }))
+            .then(() => {
+                renderMovies()
+            });
 
     })
 
@@ -141,30 +177,22 @@
             },
 
         }
-        fetch(`https://puffy-easy-circle.glitch.me/movies/${deleteItem}`, options).then(res => console.log(res)).then(() => {
-            renderMovies()
-        })
+        fetch(`https://puffy-easy-circle.glitch.me/movies/${deleteItem}`, options)
+            .then(() =>
+                $(document).ready(() => {
+                    $('.pageloader').show();
+                    setTimeout(() => {
+                        $('.pageloader').hide();
+                    }, 1000)
+                }))
+            .then(() => renderMovies())
 
     })
-
-    //  HANDLE EDIT
-    //handleEdit(id){
-    // grab user input, create an body object with new info
-
-//     fetch -> PUT url/{id}
-//     body: userInput
-// }
-
-    // $('.movie-container').on('click',`#edit`,() => {
-    //     console.log($(this).attr("value"))
-    //     //handleEdit(id)
-    // })
-
-    let loader = $('#preloader');
-
-    $(loader).on('load', () => {
-
-    })
+    $(document).ready(() => {
+        setTimeout(() => {
+            $('.pageloader').hide();
+        }, 1000)
+    });
 
 })()
 
