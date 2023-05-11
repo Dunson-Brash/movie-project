@@ -45,7 +45,7 @@
             </select>
             </td>
             <td> <input class="text-capitalize" type="text" id="edit-genre-input" placeholder="${genre}"></td>
-        <td><button class="edit-input" id="edit-input" type="button">+</button></td> 
+        <td><button value="${idNum}" class="edit-input" id="edit-input" type="button">+</button></td> 
         </form>
 </tr>
     
@@ -77,7 +77,34 @@
                         director: $(this).parent().parent().children().next().next().children().val(),
                         rating: $(this).parent().parent().children().next().next().next().children().val(),
                         genre: $(this).parent().parent().children().next().next().next().next().children().val(),
+                        id: $(this).attr('value'),
                     }
+                    // console.log($(this).parent().parent().parent().children().children().first().next().text())
+                    if(editMovie.title === ''){
+                        editMovie.title = $(this).parent().parent().prev().children().first().text()
+                    }
+                    console.log(editMovie.title)
+                    if(editMovie.director === ''){
+                        editMovie.director = $(this).parent().parent().prev().children().first().next().text()
+                    }
+                    console.log(editMovie.director)
+                    if(editMovie.rating === null){
+                        editMovie.rating = $(this).parent().parent().prev().children().first().next().next().text();
+                    }
+                    console.log(editMovie.rating)
+                    if(editMovie.genre === ''){
+                        editMovie.genre = $(this).parent().parent().prev().children().first().next().next().next().text()
+                    }
+                    console.log(editMovie.genre)
+
+                    const options = {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(editMovie),
+                    };
+                    fetch(`https://puffy-easy-circle.glitch.me/movies/${editMovie.id}`, options).then(res => console.log(res)).then(() => renderMovies())
             })
         })
     }
