@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html  data-bs-theme="dark" lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Movie Project</title>
@@ -9,35 +9,87 @@
 </head>
 <body>
 <div class="pageloader"></div>
-<nav></nav>
-<div class="container">
-    <div class="movie-container d-flex flex-wrap"></div>
-    <form id="movie-form">
-        <input type="text" id="title-input" placeholder="Title" required>
-        <input type="text" id="director-input" placeholder="Director" required>
-        <input type="text" id="genre-input" placeholder="Genre" required>
-        <select id="stars-input" required>
-            <option disabled selected>Rating</option>
-            <option>0</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-        </select>
-        <button id="add-input" type="button">+</button>
-    </form>
-    <form>
-        <select id="delete-input" required>
-        </select>
-        <button id=delete type="button">X</button>
-    </form>
+
+<nav class="navbar navbar-light bg-dark justify-content-between">
+    <a class="navbar-brand" href="#">
+        <img src="./img/codeuplogo.png" class="rounded-5" width="30" height="30" class="d-inline-block align-top"
+             alt="">
+        CodeUpMoviesApp
+    </a>
+    <div>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="button" data-toggle="modal"
+                data-target="#exampleModal1">Add
+        </button>
+        <button class="btn btn-outline-danger my-2 my-sm-0" type="button" data-toggle="modal"
+                data-target="#exampleModal2">Delete
+        </button>
+    </div>
+</nav>
+<div class="movie-container d-flex justify-content-evenly flex-wrap"></div>
+
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">ADD A MOVIE</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="movie-form">
+                    Title:
+                    <input class="form-control" type="text" id="title-input" placeholder="Title" required>
+                    Director:
+                    <input class="form-control" type="text" id="director-input" placeholder="Director" required>
+                    Genre:
+                    <input class="form-control" type="text" id="genre-input" placeholder="Genre" required>
+                    Stars:
+                    <select class="form-control" id="stars-input" required>
+                        <option disabled selected>Rating</option>
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" id="add-input">ADD</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">DELETE A MOVIE</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <select multiple class=" form-select text-capitalize" id="delete-input" required></select>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" id="delete">Delete</button>
+            </div>
+        </div>
+    </div>
 </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js"
         integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
         crossorigin="anonymous"></script>

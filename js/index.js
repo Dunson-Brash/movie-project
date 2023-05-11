@@ -22,18 +22,18 @@
                     const idNum = data.id
 
                     markUp += `
-    <div class="card editMovie col-5 m-5">
+    <div class="card editMovie col-3 m-5">
       <h1 class="text-center mb-3 mt-3 movie-title text-capitalize">${movieTitle}</h1>
       <h5 class="text-center mb-3 mt-3 movie-director text-capitalize">${movieDirector}</h5>
-      <h4 class="text-center mb-3 mt-3 movie-rating">${ratings}</h4>
+      <h4 class="text-center mb-3 mt-3 movie-rating">${ratings} Stars</h4>
       <h3 class="text-center text-capitalize mb-3 mt-3 movie-genre">${genre}</h3>
       <div class ="text-center mb-3 mt-3"><button value="${idNum}" class="edit btn btn-primary">Edit</button></div>
     </div>
     
-    <div class="card d-none col-5 m-5" id="edit-form">
+    <div class="card d-none col-3 m-5" id="edit-form">
     <form >
-      <div class="text-center mb-3 mt-3">Title: <input type="text" id="edit-title-input${idNum}" placeholder="${movieTitle}"></div>
-        <div class="text-center mb-3 mt-3">Director: <input type="text" id="edit-director-input${idNum}" placeholder="${movieDirector}"></div>
+      <div class="text-center mb-3 mt-3 text-capitalize">Title: <input type="text" id="edit-title-input${idNum}" placeholder="${movieTitle}"></div>
+        <div class="text-center mb-3 mt-3 text-capitalize">Director: <input type="text" id="edit-director-input${idNum}" placeholder="${movieDirector}"></div>
         <div class="text-center mb-3 mt-3">
             <select id="edit-stars-input" required>
                 <option disabled selected>Rating</option>
@@ -51,7 +51,7 @@
 </div>
     
   `
-                    markUp2 += `<option value="${idNum}" >${movieTitle}</option>`
+                    markUp2 += `<option class="text-capitalize" value="${idNum}" >${movieTitle}</option>`
 
 
                 })
@@ -59,7 +59,7 @@
                 $('#delete-input').html(markUp2)
 
 
-                //      handle
+                //      handle edits
             })
             .then(() => {
                 $('.movie-container').on('click', '.edit', function () {
@@ -77,7 +77,6 @@
                 // let updatedMovie = {}
                 // -----------------  this fetch request helps get movies original values and in the for Each loop ... change the values of updatedMovies based on these conditions: if the movie title that the user input is empty , switch it for movie.title,etc.
                 fetch(url).then(res => res.json()).then(movies => {
-                    console.log($(this).attr('value'))
                     movies.forEach(movie => {
                         let idNum = $(this).attr('value')
                         if (movie.id == idNum) {
@@ -108,8 +107,6 @@
                                 editMovie.genre = prevMovie.genre
                             }
 
-                            console.log(editMovie)
-                            console.log(prevMovie)
 
                             const options = {
                                 method: 'PUT',
@@ -166,7 +163,7 @@
             });
 
     })
-
+//function to delete items
     $('#delete').click(() => {
         let deleteItem = $('#delete-input').val()
         const options = {
@@ -187,6 +184,8 @@
             .then(() => renderMovies())
 
     })
+
+    //page loader on page load
     $(document).ready(() => {
         setTimeout(() => {
             $('.pageloader').hide();
